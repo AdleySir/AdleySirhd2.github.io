@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="message.css">
+</head>
+
+<body>
+  <div>
+    <h1>留言板</h1>
+    <textarea placeholder="请编辑您的留言" id="text"></textarea>
+    <button class="sub">发布</button>
+    
+    <ul  id="messages"></ul>
+  </div>
+  <script>
+    // 1.获取元素
+    const textArea = document.getElementById('text');
+    const submitButton = document.querySelector('.sub');
+    const messagesList = document.getElementById('messages');
+
+
+    // 2.注册事件，实现单击“发布”按钮发表留言的功能
+    submitButton.addEventListener('click', function() {
+      const messageContent = textArea.value.trim();
+      if (messageContent === '') return; 
+    // 2.1 创建li元素节点
+    const liElement = document.createElement('li');
+    // 2.2 将留言内容添加到li元素
+    liElement.textContent = messageContent;
+    // 2.3 在ul元素中添加li节点，并保证添加的li节点在最前面
+    messagesList.insertBefore(liElement, messagesList.firstChild);
+    // 2.4 将文本域中的内容清空
+    textArea.value = '';
+    // 2.5 实现留言删除功能
+    // 2.5.1 创建button元素节点
+    const removeButton = document.createElement('button');
+    // 2.5.2 将remove类添加到button元素
+    removeButton.classList.add('remove');
+    // 2.5.3 将“删除”文字添加到button元素
+    removeButton.textContent = '删除';
+    // 2.5.4 在li节点中添加button节点
+    liElement.appendChild(removeButton);
+    // 2.5.6 注册事件，实现单机“删除”按钮删除当前留言
+    removeButton.addEventListener('click', function() {
+        messagesList.removeChild(liElement);
+      });
+    });
+
+
+
+  </script>
+</body>
+
+</html>
